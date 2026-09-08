@@ -1,0 +1,3 @@
+interface:
+  display_name: "Shared Terminals"
+  short_description: "Run shell commands in user-attachable tmux shells"

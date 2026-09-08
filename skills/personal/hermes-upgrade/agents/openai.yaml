@@ -1,0 +1,3 @@
+interface:
+  display_name: "Hermes Upgrade"
+  short_description: "Upgrade or rebuild the Hermes agent deployment"

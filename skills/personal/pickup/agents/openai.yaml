@@ -1,0 +1,5 @@
+interface:
+  display_name: "Pickup"
+  short_description: "Resume work from a handoff document"
+policy:
+  allow_implicit_invocation: false

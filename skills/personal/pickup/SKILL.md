@@ -1,7 +1,7 @@
 ---
 name: pickup
 description: Resume work from a handoff document written by a previous agent session.
-argument-hint: "Which handoff? A slug, keyword, or filename. Default: the most recent."
+argument-hint: "Optional: a slug, keyword, or filename to narrow the list."
 disable-model-invocation: true
 ---
 
@@ -11,12 +11,19 @@ Resume work from a handoff document. This is the counterpart to `handoff`, which
 
 Handoffs live in `~/Dropbox/agent-handoffs`. Files are named `<YYYYMMDDHHMM>-<short-slug>.md`, so a plain sort puts the most recent last. Ignore the `archive/` subdirectory unless the user names a file in it.
 
-- If the user passed no arguments, take the most recent file.
-- If the user passed arguments, treat them as a search: match against filenames first, then against the first heading of each document. One match: use it. Several matches: list them (filename and first heading) and ask which one. None: list the five most recent and ask.
-- If the chosen document names one it supersedes, the chosen one is authoritative; the older one is background only.
-- If a newer handoff shares the same slug, say so and prefer the newer one unless the user asked for the older by name.
+Always let the user choose. Never pick a document on their behalf, even when only one looks relevant.
 
-Read the whole document before doing anything else.
+- With no arguments: list the ten most recent files, newest first.
+- With arguments: treat them as a search. Match against filenames first, then against the first heading of each document. List up to ten matches, newest first. If nothing matches, say so and fall back to the ten most recent.
+
+Present the list as a numbered menu, one line per file: the date and time from the filename prefix, formatted for reading (e.g. `2026-09-07 22:21`), then the first heading of the document. Read only the first heading of each file at this stage, not the whole document. Where the harness offers a structured choice prompt, use it; otherwise ask in plain text. Wait for the answer.
+
+Once a document is chosen:
+
+- If it names one it supersedes, the chosen one is authoritative; the older one is background only.
+- If a newer handoff shares the same slug, point that out and confirm the user still wants the older one.
+
+Read the whole chosen document before doing anything else.
 
 ## Check the ground truth
 
